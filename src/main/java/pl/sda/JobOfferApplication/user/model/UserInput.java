@@ -13,7 +13,7 @@ public class UserInput {
     private LocalDate creationDate;
     private String password;
 
-    private UserInput() {
+    public UserInput(String asdasd, String dasdasd, String asdasdasdasd) {
         creationDate = LocalDate.now();
     }
 
