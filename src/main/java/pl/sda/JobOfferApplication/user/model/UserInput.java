@@ -24,4 +24,5 @@ public class UserInput {
         this.creationDate = LocalDate.now();
         this.password = password;
     }
+
 }

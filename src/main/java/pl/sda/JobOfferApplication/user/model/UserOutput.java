@@ -17,4 +17,10 @@ public class UserOutput {
     private String name;
     private String login;
     private LocalDate creationDate;
+
+    public UserOutput(Long id, String name, String login) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+    }
 }
