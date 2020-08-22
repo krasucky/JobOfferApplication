@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserOutput>>getAllUsers() {
+    public ResponseEntity<List<UserOutput>> getAllUsers() {
 
         final List<UserOutput> allUsers = userService.getAllUsers();
 
@@ -33,9 +33,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity <UserOutput> getUserById(@PathVariable(value = "id") Long id) throws UserException {
+    public ResponseEntity<UserOutput> getUserById(@PathVariable(value = "id") Long id) throws UserException {
 
-        UserOutput userById = userService.getUserById(id) ;
+        UserOutput userById = userService.getUserById(id);
 
 
         return ResponseEntity
@@ -50,6 +50,15 @@ public class UserController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
+                .build();
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable(value = "id") Long id) throws UserException {
+        userService.deleteUserById(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .build();
     }
 }
