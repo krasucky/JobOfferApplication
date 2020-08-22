@@ -67,9 +67,5 @@ public class UserServiceImpl implements UserService {
         if(userRepository.existsByLogin(userInput.getLogin())) {
             throw new UserException(THERE_IS_ALREADY_AN_USER_WITH_THIS_USER_NAME);
         }
-
     }
-
-    // login przynajmniej 6 znaków i hasło przynajmniej jeden znak specjalny, cyfra i minimum 8 znakow, jedna duża, jedna mała
-    // zrobić taką walidację
 }
