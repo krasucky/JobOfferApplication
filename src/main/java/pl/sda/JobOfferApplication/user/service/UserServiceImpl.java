@@ -56,15 +56,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserOutput getUserById(Long id) throws UserException {
 
-       final Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
-       if(!optionalUserEntity.isPresent()) {
-           throw new UserException(NO_USER_FOUND_OR_GIVEN_ID);
-       }
-       return optionalUserEntity.get().toOutput();
+        return getUserEntity(id).toOutput();
+    }
+
+    private UserEntity getUserEntity(Long id) throws UserException {
+        final Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        if (!optionalUserEntity.isPresent()) {
+            throw new UserException(NO_USER_FOUND_OR_GIVEN_ID);
+        }
+        return optionalUserEntity.get();
+    }
+
+    @Override
+    //public void deleteUser(UserOutput userOutput) throws UserException {
+    public void deleteUserById(Long id) throws UserException {
+        getUserById(id);
+        userRepository.delete(getUserEntity(id));
     }
 
     private void validateUserInput(UserInput userInput) throws UserException {
-        if(userRepository.existsByLogin(userInput.getLogin())) {
+        if (userRepository.existsByLogin(userInput.getLogin())) {
             throw new UserException(THERE_IS_ALREADY_AN_USER_WITH_THIS_USER_NAME);
         }
     }
