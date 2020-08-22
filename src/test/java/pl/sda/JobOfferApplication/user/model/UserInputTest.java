@@ -30,7 +30,7 @@ class UserInputTest {
     public void CreateUserCorrectly() throws UserException {
 
         //given
-        UserInput userInput = new UserInput("abc", "abc", LocalDate.now(), "admin1");
+        UserInput userInput = new UserInput("abc", "abc", "admin1");
 
         // when
         userService.createUser(userInput);

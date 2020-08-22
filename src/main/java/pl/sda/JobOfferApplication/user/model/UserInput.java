@@ -18,7 +18,7 @@ public class UserInput {
     }
 
 
-    public UserInput(String name, String login, LocalDate creationDate, String password) {
+    public UserInput(String name, String login, String password) {
         this.name = name;
         this.login = login;
         this.creationDate = LocalDate.now();
