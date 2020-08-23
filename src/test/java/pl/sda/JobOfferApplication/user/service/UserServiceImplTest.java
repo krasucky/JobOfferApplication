@@ -27,6 +27,7 @@ class UserServiceImplTest {
 //    void tearDown() {
 //        userRepository.deleteAll();
 //    }
+  
     @Test
     public void shouldCreateUserCorrectly() throws UserException {
         //given
@@ -42,12 +43,16 @@ class UserServiceImplTest {
     }
 
     @Test
-    public void shouldGetUserByIdCorrectly() throws UserException {
+
+    public void shouldGetUserByIdCorrectly() throws UserException{
+
         //given
-        UserEntity userEntity = new UserEntity("Jan", "Kowalski",  "1234");
+        UserEntity userEntity = new UserEntity ("Jan", "Kowalski", LocalDate.now() , "1234");
         userRepository.save(userEntity);
+
         //when
         UserOutput userById = userService.getUserById(1L);
+
         //then
         assertTrue(!(userById == null));
         UserOutput userOutput = userEntity.toOutput();

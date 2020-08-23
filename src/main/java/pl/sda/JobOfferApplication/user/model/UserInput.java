@@ -21,4 +21,5 @@ public class UserInput {
         this.login = login;
         this.password = password;
     }
+
 }
