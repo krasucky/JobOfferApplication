@@ -1,5 +1,6 @@
 package pl.sda.JobOfferApplication.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +21,15 @@ public class UserEntity {
 
     private String name;
     private String login;
-    private LocalDate creationDate;
+    @JsonIgnore
+    private final  LocalDate creationDate= LocalDate.now();
     private String password;
 
-    public UserEntity(String name, String login, LocalDate creationDate, String password) {
+
+        public UserEntity(String name, String login, String password) {
         this.name = name;
         this.login = login;
-        this.creationDate = creationDate;
+       // this.creationDate = creationDate;
         this.password = password;
     }
 
