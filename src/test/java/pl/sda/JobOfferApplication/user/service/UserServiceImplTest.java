@@ -18,37 +18,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceImplTest {
-
     @Autowired
     UserService userService;
-
     @Autowired
     UserRepository userRepository;
 
-//    @AfterEach
+    //    @AfterEach
 //    void tearDown() {
 //        userRepository.deleteAll();
 //    }
-
+  
     @Test
     public void shouldCreateUserCorrectly() throws UserException {
-
         //given
         UserInput userInput = new UserInput("Jan", "Kowalski", "1234");
-
         //when
         userService.createUser(userInput);
-
         //then
         final List<UserEntity> all = userRepository.findAll();
         assertTrue(all.size() == 1);
         final UserOutput userOutput = all.get(0).toOutput();
-
         userInput.equals(userOutput);
         assertEquals(userOutput.getLogin(), userInput.getLogin());
     }
 
     @Test
+
     public void shouldGetUserByIdCorrectly() throws UserException{
 
         //given
@@ -64,5 +59,4 @@ class UserServiceImplTest {
         assertEquals(userOutput.getName(), userById.getName());
         assertEquals(userOutput.getLogin(), userById.getLogin());
     }
-    
 }
