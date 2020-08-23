@@ -16,18 +16,21 @@ import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.repository.UserRepository;
 import pl.sda.JobOfferApplication.user.service.UserService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static pl.sda.JobOfferApplication.user.controller.UserController.USERS_MAPPING;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = JobOfferApplication.class)
-class GetUserByIdTest {
+class UserControllerGetByIdTest {
+
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     UserService userService;
+
     @AfterEach
     void tearDown() {
         userRepository.deleteAll();
@@ -35,6 +38,7 @@ class GetUserByIdTest {
 
     @Test
     public void getUserByIdProperly() throws Exception {
+
         //given
         UserInput userInput = UserInput.builder()
                 .name("sadasd")
@@ -42,14 +46,15 @@ class GetUserByIdTest {
                 .password("ddaedawndai")
                 .build();
 
-//        UserInput userInput = new UserInput("lsdkfjslkd", "ksjdfhsk", "ksdjfh");
         userService.createUser(userInput);
         Long id = userService.getAllUsers().get(0).getId();
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get(USERS_MAPPING + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON);
+
         //when
         final ResultActions resultActions = mockMvc.perform(requestBuilder);
+
         //then
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }

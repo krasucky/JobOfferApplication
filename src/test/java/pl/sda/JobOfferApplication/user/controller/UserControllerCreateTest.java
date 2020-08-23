@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.sda.JobOfferApplication.JobOfferApplication;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.repository.UserRepository;
@@ -24,8 +23,10 @@ import static pl.sda.JobOfferApplication.user.controller.UserController.USERS_MA
 @AutoConfigureMockMvc
 @SpringBootTest(classes = JobOfferApplication.class)
 class UserControllerCreateTest {
+
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     UserRepository userRepository;
 
@@ -34,9 +35,9 @@ class UserControllerCreateTest {
         userRepository.deleteAll();
     }
 
-
     @Test
     public void shouldCreateUserProperly() throws Exception {
+
         UserInput userInput = UserInput.builder()
                 .name("Jan")
                 .login("Kowal")
@@ -50,6 +51,7 @@ class UserControllerCreateTest {
 
         // When
         final ResultActions resultActions = mockMvc.perform(requestBuilder);
+
         // Then
         resultActions.andExpect(status().isCreated());
     }

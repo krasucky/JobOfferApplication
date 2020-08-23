@@ -1,7 +1,6 @@
 package pl.sda.JobOfferApplication.user.service;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,15 +10,16 @@ import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
 import pl.sda.JobOfferApplication.user.repository.UserRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceImplTest {
+
     @Autowired
     UserService userService;
+
     @Autowired
     UserRepository userRepository;
 
@@ -30,20 +30,21 @@ class UserServiceImplTest {
 
     @Test
     public void shouldCreateUserCorrectly() throws UserException {
+
         //given
         UserInput userInput = new UserInput("Jan", "Kowalski", "1234");
         //when
         userService.createUser(userInput);
+
         //then
         final List<UserEntity> all = userRepository.findAll();
-        assertTrue(all.size() == 1);
+        assertEquals(1, all.size());
         final UserOutput userOutput = all.get(0).toOutput();
         userInput.equals(userOutput);
         assertEquals(userOutput.getLogin(), userInput.getLogin());
     }
 
     @Test
-
     public void shouldGetUserByIdCorrectly() throws UserException {
 
         //given
@@ -63,10 +64,8 @@ class UserServiceImplTest {
 
     @Test
     public void deleteUserTest() throws UserException {
+
         //given
-
-           // userRepository.deleteAll();
-
         UserInput userInput = UserInput.builder()
                 .name("abc")
                 .login("abc")
@@ -74,19 +73,13 @@ class UserServiceImplTest {
                 .build();
 
         userService.createUser(userInput);
+
         //when
         Long id = userRepository.findAll().get(0).getId();
         userService.deleteUserById(id);
 
-
         //then
         final List<UserEntity> all = userRepository.findAll();
         assertTrue(all.size() == 0);
-
-//        final UserOutput userOutput = all.get(0).toOutput();
-//        userInput.equals(userOutput);
-//        assertEquals(userOutput.getLogin(), userInput.getLogin());
     }
-    
-
 }
