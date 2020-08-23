@@ -23,7 +23,7 @@ import static pl.sda.JobOfferApplication.user.controller.UserController.USERS_MA
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = JobOfferApplication.class)
-class UserControllerTest {
+class UserControllerCreateTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -38,9 +38,9 @@ class UserControllerTest {
     @Test
     public void shouldCreateUserProperly() throws Exception {
         UserInput userInput = UserInput.builder()
-                .name("sadasd")
-                .login("Awdawdaw")
-                .password("ddaedawndai")
+                .name("Jan")
+                .login("Kowal")
+                .password("1234")
                 .build();
 
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
