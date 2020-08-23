@@ -23,6 +23,11 @@ class UserServiceImplTest {
     @Autowired
     UserRepository userRepository;
 
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
+    }
+
     @Test
     public void shouldCreateUserCorrectly() throws UserException {
         //given
@@ -44,12 +49,13 @@ class UserServiceImplTest {
         //given
         UserEntity userEntity = new UserEntity("Jan", "Kowalski", "1234");
         userRepository.save(userEntity);
+        Long id = userRepository.findAll().get(0).getId();
 
         //when
-        UserOutput userById = userService.getUserById(1L);
+        UserOutput userById = userService.getUserById(id);
 
         //then
-        assertTrue(!(userById == null));
+        assertFalse((userById == null));
         UserOutput userOutput = userEntity.toOutput();
         assertEquals(userOutput.getName(), userById.getName());
         assertEquals(userOutput.getLogin(), userById.getLogin());
@@ -58,31 +64,28 @@ class UserServiceImplTest {
     @Test
     public void deleteUserTest() throws UserException {
         //given
+
+           // userRepository.deleteAll();
+
         UserInput userInput = UserInput.builder()
                 .name("abc")
                 .login("abc")
                 .password("admin1")
                 .build();
 
-        UserInput userInput1 = UserInput.builder()
-                .name("abca")
-                .login("abca")
-                .password("aadmin1")
-                .build();
-
-        //when
         userService.createUser(userInput);
-        userService.createUser(userInput1);
-        userService.deleteUserById(2L);
+        //when
+        Long id = userRepository.findAll().get(0).getId();
+        userService.deleteUserById(id);
 
 
         //then
         final List<UserEntity> all = userRepository.findAll();
-        assertTrue(all.size() == 1);
+        assertTrue(all.size() == 0);
 
-        final UserOutput userOutput = all.get(0).toOutput();
-        userInput.equals(userOutput);
-        assertEquals(userOutput.getLogin(), userInput.getLogin());
+//        final UserOutput userOutput = all.get(0).toOutput();
+//        userInput.equals(userOutput);
+//        assertEquals(userOutput.getLogin(), userInput.getLogin());
     }
     
 
