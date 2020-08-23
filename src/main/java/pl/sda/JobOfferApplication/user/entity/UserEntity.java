@@ -29,7 +29,6 @@ public class UserEntity {
         public UserEntity(String name, String login, String password) {
         this.name = name;
         this.login = login;
-       // this.creationDate = creationDate;
         this.password = password;
     }
 

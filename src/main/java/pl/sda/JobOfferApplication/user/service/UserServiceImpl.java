@@ -1,7 +1,5 @@
 package pl.sda.JobOfferApplication.user.service;
 
-import org.hibernate.mapping.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sda.JobOfferApplication.user.entity.UserEntity;
@@ -10,7 +8,6 @@ import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
 import pl.sda.JobOfferApplication.user.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,7 +64,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    //public void deleteUser(UserOutput userOutput) throws UserException {
     public void deleteUserById(Long id) throws UserException {
         getUserById(id);
         userRepository.delete(getUserEntity(id));

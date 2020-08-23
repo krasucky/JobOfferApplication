@@ -7,9 +7,7 @@ import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
 import pl.sda.JobOfferApplication.user.service.UserService;
-import pl.sda.JobOfferApplication.user.service.UserServiceImpl;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -42,6 +40,7 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userById);
     }
+
     @PostMapping
     public ResponseEntity<Void> postUser(@RequestBody UserInput userInput) throws UserException {
 
@@ -51,7 +50,6 @@ public class UserController {
                 .status(HttpStatus.CREATED)
                 .build();
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable(value = "id") Long id) throws UserException {
