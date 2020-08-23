@@ -54,4 +54,36 @@ class UserServiceImplTest {
         assertEquals(userOutput.getName(), userById.getName());
         assertEquals(userOutput.getLogin(), userById.getLogin());
     }
+
+    @Test
+    public void deleteUserTest() throws UserException {
+        //given
+        UserInput userInput = UserInput.builder()
+                .name("abc")
+                .login("abc")
+                .password("admin1")
+                .build();
+
+        UserInput userInput1 = UserInput.builder()
+                .name("abca")
+                .login("abca")
+                .password("aadmin1")
+                .build();
+
+        //when
+        userService.createUser(userInput);
+        userService.createUser(userInput1);
+        userService.deleteUserById(2L);
+
+
+        //then
+        final List<UserEntity> all = userRepository.findAll();
+        assertTrue(all.size() == 1);
+
+        final UserOutput userOutput = all.get(0).toOutput();
+        userInput.equals(userOutput);
+        assertEquals(userOutput.getLogin(), userInput.getLogin());
+    }
+    
+
 }
