@@ -1,7 +1,5 @@
 package pl.sda.JobOfferApplication.user.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,49 +14,43 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.sda.JobOfferApplication.JobOfferApplication;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.repository.UserRepository;
+import pl.sda.JobOfferApplication.user.service.UserService;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.*;
 import static pl.sda.JobOfferApplication.user.controller.UserController.USERS_MAPPING;
-
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = JobOfferApplication.class)
-class UserControllerTest {
+class GetUserByIdTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    UserService userService;
     @AfterEach
     void tearDown() {
         userRepository.deleteAll();
     }
 
-
     @Test
-    public void shouldCreateUserProperly() throws Exception {
+    public void getUserByIdProperly() throws Exception {
+        //given
         UserInput userInput = UserInput.builder()
                 .name("sadasd")
                 .login("Awdawdaw")
                 .password("ddaedawndai")
                 .build();
 
+//        UserInput userInput = new UserInput("lsdkfjslkd", "ksjdfhsk", "ksdjfh");
+        userService.createUser(userInput);
+        Long id = userService.getAllUsers().get(0).getId();
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post(USERS_MAPPING)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(userInput));
-
-        // When
+                .get(USERS_MAPPING + "/" + id)
+                .contentType(MediaType.APPLICATION_JSON);
+        //when
         final ResultActions resultActions = mockMvc.perform(requestBuilder);
-        // Then
-        resultActions.andExpect(status().isCreated());
-    }
-
-    public static String toJson(final Object object) {
-        try {
-            return new ObjectMapper().writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        //then
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
