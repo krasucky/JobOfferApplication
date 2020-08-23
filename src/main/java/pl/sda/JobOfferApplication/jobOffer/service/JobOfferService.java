@@ -1,5 +1,7 @@
 package pl.sda.JobOfferApplication.jobOffer.service;
 
+import pl.sda.JobOfferApplication.jobOffer.exeption.JobOfferException;
+import pl.sda.JobOfferApplication.jobOffer.model.JobOfferInput;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
