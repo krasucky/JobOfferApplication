@@ -13,10 +13,12 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(UserController.USERS_MAPPING)
 public class UserController {
 
-    private UserService userService;
+    public static final String USERS_MAPPING = "/users";
+    final private UserService userService;
+
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -32,17 +34,14 @@ public class UserController {
                 .body(allUsers);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<UserOutput> getUserById(@PathVariable(value = "id") Long id) throws UserException {
-
         UserOutput userById = userService.getUserById(id);
-
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userById);
     }
-
     @PostMapping
     public ResponseEntity<Void> postUser(@RequestBody UserInput userInput) throws UserException {
 

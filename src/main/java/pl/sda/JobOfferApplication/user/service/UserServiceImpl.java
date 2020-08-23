@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity =
                 new UserEntity(userInput.getName(),
                         userInput.getLogin(),
-                        userInput.getCreationDate(),
                         encode);
 
         userRepository.save(userEntity);
